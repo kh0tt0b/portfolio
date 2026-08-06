@@ -365,6 +365,57 @@
 
 
                 <!--
+      - #PORTFOLIO GALLERY MODAL
+    -->
+
+                <div class="modal-container" data-shots-modal-container>
+
+                    <div class="overlay" data-shots-overlay></div>
+
+                    <section class="shots-modal">
+
+                        <button class="modal-close-btn" data-shots-close-btn>
+                            <ion-icon name="close-outline"></ion-icon>
+                        </button>
+
+                        <div class="shots-header">
+
+                            <h4 class="h3 shots-title" data-shots-title>Project Screenshots</h4>
+
+                            <a href="#" target="_blank" rel="noopener" class="shots-source" data-shots-source>
+                                <ion-icon name="logo-github"></ion-icon>
+                                <span>View source</span>
+                            </a>
+
+                        </div>
+
+                        <div class="shots-viewport">
+
+                            <button class="shots-nav-btn" data-shots-prev aria-label="Previous">
+                                <ion-icon name="chevron-back-outline"></ion-icon>
+                            </button>
+
+                            <figure class="shots-frame">
+                                <img src="" alt="Screenshot" data-shots-img loading="lazy">
+                                <figcaption class="shots-caption" data-shots-caption></figcaption>
+                            </figure>
+
+                            <button class="shots-nav-btn" data-shots-next aria-label="Next">
+                                <ion-icon name="chevron-forward-outline"></ion-icon>
+                            </button>
+
+                        </div>
+
+                        <div class="shots-thumbs" data-shots-thumbs></div>
+
+                    </section>
+
+                </div>
+
+
+
+
+                <!--
       - #RESUME
     -->
 
@@ -645,7 +696,7 @@
                         <ul class="project-list">
 
                             <li class="project-item  active" data-filter-item data-category="full-stack">
-                                <a href="https://github.com/kh0tt0b/amisam" target="_blank">
+                                <a href="#portfolio" data-gallery="amisam" class="project-gallery-link">
 
                                     <figure class="project-img">
                                         <div class="project-item-icon-box">
@@ -657,13 +708,13 @@
 
                                     <h3 class="project-title">AMISAM</h3>
 
-                                    <p class="project-category">Full-stack fintech platform</p>
+                                    <p class="project-category">Full-stack fintech platform · <span style="color: var(--orange-yellow-crayola)">Click to view screenshots</span></p>
 
                                 </a>
                             </li>
 
                             <li class="project-item  active" data-filter-item data-category="web development">
-                                <a href="https://github.com/kh0tt0b/soko-marketplace-20260707" target="_blank">
+                                <a href="#portfolio" data-gallery="soko" class="project-gallery-link">
 
                                     <figure class="project-img">
                                         <div class="project-item-icon-box">
@@ -675,7 +726,7 @@
 
                                     <h3 class="project-title">SOKO Marketplace</h3>
 
-                                    <p class="project-category">Web development</p>
+                                    <p class="project-category">Web development · <span style="color: var(--orange-yellow-crayola)">Click to view screenshots</span></p>
 
                                 </a>
                             </li>

@@ -157,3 +157,132 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
+
+
+
+// ------------------------------------------------------------------
+// portfolio screenshot gallery
+// ------------------------------------------------------------------
+
+const GALLERIES = {
+  amisam: {
+    title: "AMISAM — Savings & Microfinance Platform",
+    source: "https://github.com/kh0tt0b/amisam",
+    shots: [
+      ["amisam-web-dashboard.png", "Web · Admin Dashboard — live KPIs from the running API"],
+      ["amisam-web-members.png", "Web · Member management — KYC status, balances, verification"],
+      ["amisam-web-payments.png", "Web · Payments — MTN MoMo flow with 10% admin fee"],
+      ["amisam-web-disbursements.png", "Web · Disbursements & lottery — winners and claims"],
+      ["amisam-web-reports.png", "Web · Reporting — balance sheet, cycle summary, audit trail"],
+      ["amisam-mobile-login.png", "Mobile · Member sign-in (React Native)"],
+      ["amisam-mobile-home.png", "Mobile · Home dashboard — RWF 185,000 balance, quick actions"],
+      ["amisam-mobile-transactions.png", "Mobile · Transactions — Payment In RWF 50,000 (PAY202608020030)"],
+      ["amisam-mobile-disbursements.png", "Mobile · Disbursements — lottery winnings & goods"],
+      ["amisam-mobile-profile.png", "Mobile · Profile — member #1, KYC verified, ACTIVE"],
+    ],
+  },
+  soko: {
+    title: "SOKO — Multi-Vendor Marketplace",
+    source: "https://github.com/kh0tt0b/soko-marketplace-20260707",
+    shots: [
+      ["soko-web-marketplace.png", "Web · Storefront — 17 live listings from the catalog API"],
+      ["soko-web-login.png", "Web · Authentication — email + password"],
+      ["soko-web-home.png", "Web · Home (logged in) — session-backed navigation"],
+      ["soko-web-admin.png", "Web · Admin dashboard — 3 users, 17 active listings, 0 pending"],
+      ["soko-web-account.png", "Web · Account — profile data from the API"],
+      ["soko-mobile-marketplace.png", "Mobile · Marketplace (Flutter) — live catalog over LAN"],
+      ["soko-mobile-detail.png", "Mobile · Listing detail — Trek Domane SL 5, $2,800, Cairo"],
+      ["soko-mobile-login.png", "Mobile · Sign-in screen"],
+      ["soko-mobile-home-loggedin.png", "Mobile · Home (logged in) — real session on device"],
+      ["soko-mobile-account2.png", "Mobile · Account — profile with listings"],
+    ],
+  },
+};
+
+const shotsModalContainer = document.querySelector("[data-shots-modal-container]");
+const shotsOverlay = document.querySelector("[data-shots-overlay]");
+const shotsCloseBtn = document.querySelector("[data-shots-close-btn]");
+const shotsTitle = document.querySelector("[data-shots-title]");
+const shotsSource = document.querySelector("[data-shots-source]");
+const shotsImg = document.querySelector("[data-shots-img]");
+const shotsCaption = document.querySelector("[data-shots-caption]");
+const shotsThumbs = document.querySelector("[data-shots-thumbs]");
+const shotsPrev = document.querySelector("[data-shots-prev]");
+const shotsNext = document.querySelector("[data-shots-next]");
+
+let currentShots = [];
+let currentIndex = 0;
+
+function shotsOpen(galleryKey) {
+  const gallery = GALLERIES[galleryKey];
+  if (!gallery) return;
+  currentShots = gallery.shots;
+  currentIndex = 0;
+  shotsTitle.innerHTML = gallery.title;
+  shotsSource.href = gallery.source;
+  shotsThumbs.innerHTML = "";
+  gallery.shots.forEach((shot, i) => {
+    const btn = document.createElement("button");
+    btn.className = "shots-thumb" + (i === 0 ? " active" : "");
+    btn.innerHTML = '<img src="./assets/images/screenshots/' + shot[0] + '" alt="" loading="lazy">';
+    btn.addEventListener("click", function () { shotsShow(i); });
+    shotsThumbs.appendChild(btn);
+  });
+  shotsShow(0);
+  shotsModalContainer.classList.add("active");
+  shotsOverlay.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+function shotsClose() {
+  shotsModalContainer.classList.remove("active");
+  shotsOverlay.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+function shotsShow(index) {
+  currentIndex = (index + currentShots.length) % currentShots.length;
+  const shot = currentShots[currentIndex];
+  shotsImg.src = "./assets/images/screenshots/" + shot[0];
+  shotsImg.alt = shot[1];
+  shotsCaption.textContent = shot[1];
+  Array.from(shotsThumbs.children).forEach((el, i) => {
+    el.classList.toggle("active", i === currentIndex);
+  });
+  const activeThumb = shotsThumbs.children[currentIndex];
+  if (activeThumb) activeThumb.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+}
+
+// open from project cards
+document.querySelectorAll("[data-gallery]").forEach(function (link) {
+  link.addEventListener("click", function (e) {
+    e.preventDefault();
+    shotsOpen(this.dataset.gallery);
+  });
+});
+
+// close controls
+shotsCloseBtn.addEventListener("click", shotsClose);
+shotsOverlay.addEventListener("click", shotsClose);
+
+// navigation
+shotsPrev.addEventListener("click", function () { shotsShow(currentIndex - 1); });
+shotsNext.addEventListener("click", function () { shotsShow(currentIndex + 1); });
+
+// keyboard support
+document.addEventListener("keydown", function (e) {
+  if (!shotsModalContainer.classList.contains("active")) return;
+  if (e.key === "Escape") { shotsClose(); }
+  else if (e.key === "ArrowLeft") { shotsShow(currentIndex - 1); }
+  else if (e.key === "ArrowRight") { shotsShow(currentIndex + 1); }
+});
+
+// swipe support
+let swipeStartX = null;
+shotsModalContainer.addEventListener("touchstart", function (e) { swipeStartX = e.touches[0].clientX; }, { passive: true });
+shotsModalContainer.addEventListener("touchend", function (e) {
+  if (swipeStartX === null) return;
+  const dx = e.changedTouches[0].clientX - swipeStartX;
+  if (Math.abs(dx) > 50) shotsShow(currentIndex + (dx < 0 ? 1 : -1));
+  swipeStartX = null;
+}, { passive: true });
