@@ -120,6 +120,18 @@ const form = document.querySelector("[data-form]");
 const formInputs = document.querySelectorAll("[data-form-input]");
 const formBtn = document.querySelector("[data-form-btn]");
 
+const formStatus = document.querySelector("[data-form-status]");
+
+/**
+ * Web3Forms delivers the message to khattabafas@gmail.com.
+ *
+ * A page on GitHub Pages is static — it can serve files and nothing else — so
+ * the form has to hand the message to a service that can send mail. This key is
+ * public by design: it only says "deliver to this inbox", it grants no access to
+ * the mailbox and cannot be used to read anything.
+ */
+const WEB3FORMS_KEY = "REPLACE_WITH_ACCESS_KEY";
+
 // add event to all form input field
 for (let i = 0; i < formInputs.length; i++) {
   formInputs[i].addEventListener("input", function () {
@@ -131,6 +143,70 @@ for (let i = 0; i < formInputs.length; i++) {
       formBtn.setAttribute("disabled", "");
     }
 
+  });
+}
+
+/** Says what happened, where the person is already looking. */
+const setStatus = function (state, text) {
+  if (!formStatus) return;
+  formStatus.textContent = text;
+  formStatus.className = "form-status " + state;
+};
+
+if (form) {
+  form.addEventListener("submit", async function (event) {
+    /*
+     * Always. Without this the browser navigates to the action, which for the
+     * template default of "#" meant a reload with the visitor's message pasted
+     * into the address bar and delivered precisely nowhere.
+     */
+    event.preventDefault();
+
+    // Honeypot: a real person leaves this hidden field empty. Answer as though
+    // it worked, so a bot learns nothing from the difference.
+    if (form.botcheck && form.botcheck.checked) {
+      setStatus("ok", "Thanks — your message has been sent.");
+      form.reset();
+      return;
+    }
+
+    formBtn.setAttribute("disabled", "");
+    setStatus("busy", "Sending…");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: "New message from your portfolio",
+          from_name: "Portfolio contact form",
+          name: form.fullname.value,
+          email: form.email.value,
+          message: form.message.value,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus("ok", "Thanks — your message has been sent. I'll reply to " + form.email.value + ".");
+        form.reset();
+      } else {
+        throw new Error(result.message || "the service refused the message");
+      }
+    } catch (error) {
+      /*
+       * Never swallow this. A visitor who is told nothing assumes it worked and
+       * never follows up, which is exactly how the old form lost enquiries.
+       */
+      setStatus(
+        "bad",
+        "That did not send (" + error.message + "). Please email khattabafas@gmail.com directly.",
+      );
+    } finally {
+      if (form.checkValidity()) formBtn.removeAttribute("disabled");
+    }
   });
 }
 
