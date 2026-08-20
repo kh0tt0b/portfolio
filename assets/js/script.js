@@ -181,6 +181,18 @@ const GALLERIES = {
       ["amisam-mobile-profile.png", "Mobile · Profile — member #1, KYC verified, ACTIVE"],
     ],
   },
+  "restaurant-pos": {
+    title: "Restaurant POS — Service Geometry",
+    source: "https://github.com/kh0tt0b/restaurant-pos",
+    shots: [
+      ["pos-floor-plan.png", "Floor plan — four table states at a glance: free, in service, bill asked, running late"],
+      ["pos-order-ticket.png", "Order — menu, live ticket and a kitchen-state chip; every total comes from the server"],
+      ["pos-kitchen-pass.png", "Kitchen pass — pushed over SSE, big type, no prices, and an undo strip for a wrong bump"],
+      ["pos-payment-bills.png", "Payment — open bills coloured by where the food is: blue in the kitchen, yellow up and waiting"],
+      ["pos-dashboard.png", "Reporting — sales by hour, top items, tender split, all from the live database"],
+      ["pos-sign-in.png", "Staff sign-in — pick a name, then a 4-digit PIN; role decides what the till will show"],
+    ],
+  },
   soko: {
     title: "SOKO — Multi-Vendor Marketplace",
     source: "https://github.com/kh0tt0b/soko-marketplace-20260707",

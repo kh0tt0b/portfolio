@@ -8,6 +8,7 @@ A personal portfolio website built with HTML, CSS, and JavaScript. Showcases ful
 
 - **AMISAM** — Savings & microfinance management system (Laravel 11, React 18, React Native, PostgreSQL, Redis, Docker). MTN MoMo payments, secure lottery draws, reporting and analytics. [Source](https://github.com/kh0tt0b/amisam)
 - **SOKO Marketplace** — Full-stack marketplace monorepo (NestJS, Prisma, React 19, Flutter, PostgreSQL, Redis, Docker). [Source](https://github.com/kh0tt0b/soko-marketplace-20260707)
+- **Restaurant POS** — Tablet-first point of sale for dine-in, takeaway and delivery (Node 24, TypeScript, node:sqlite, React, Electron). Offline-first sync, live kitchen display over SSE, role-based permissions, thermal receipt printing, zero runtime dependencies. [Source](https://github.com/kh0tt0b/restaurant-pos)
 
 ## Local Development
 
