@@ -205,8 +205,6 @@ const GALLERIES = {
       ["soko-mobile-marketplace.png", "Mobile · Marketplace (Flutter) — live catalog over LAN"],
       ["soko-mobile-detail.png", "Mobile · Listing detail — Trek Domane SL 5, $2,800, Cairo"],
       ["soko-mobile-login.png", "Mobile · Sign-in screen"],
-      ["soko-mobile-home-loggedin.png", "Mobile · Home (logged in) — real session on device"],
-      ["soko-mobile-account2.png", "Mobile · Account — profile with listings"],
     ],
   },
 };
