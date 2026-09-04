@@ -205,8 +205,26 @@ const GALLERIES = {
       ["soko-mobile-marketplace.png", "Mobile · Marketplace (Flutter) — live catalog over LAN"],
       ["soko-mobile-detail.png", "Mobile · Listing detail — Trek Domane SL 5, $2,800, Cairo"],
       ["soko-mobile-login.png", "Mobile · Sign-in screen"],
-      ["soko-mobile-home-loggedin.png", "Mobile · Home (logged in) — real session on device"],
-      ["soko-mobile-account2.png", "Mobile · Account — profile with listings"],
+    ],
+  },
+  sijil: {
+    title: "Sijil — Offline POS & Billing",
+    source: "https://github.com/kh0tt0b/sijil",
+    shots: [
+      ["sijil-mobile-checkout.png", "Checkout — camera barcode scan with live cart panel, real shop data"],
+      ["sijil-mobile-products.png", "Product Management — stock, prices and units, scan-to-find by barcode"],
+      ["sijil-mobile-sales-history.png", "Sales History — daily takings by payment method, per-receipt breakdown"],
+      ["sijil-mobile-settings.png", "Settings — products, shop details, sales history and scan behaviour"],
+    ],
+  },
+  "rwanda-id-scanner": {
+    title: "Rwanda ID Scanner",
+    source: "https://github.com/kh0tt0b/rwanda-id-scanner",
+    shots: [
+      ["rwanda-id-mobile-scan.png", "Scan tab — camera aimed at the card's barcode, live viewfinder"],
+      ["rwanda-id-mobile-mrz.png", "MRZ tab — on-device OCR fallback for cards with no barcode"],
+      ["rwanda-id-mobile-raw.png", "Raw dump — every payload byte verbatim, for writing new parsers"],
+      ["rwanda-id-mobile-settings.png", "Settings — clipboard auto-copy templates for the registration system"],
     ],
   },
 };
