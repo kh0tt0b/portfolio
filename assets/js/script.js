@@ -164,7 +164,7 @@ if (form) {
     // Honeypot: a real person leaves this hidden field empty. Answer as though
     // it worked, so a bot learns nothing from the difference.
     if (form.botcheck && form.botcheck.checked) {
-      setStatus("ok", "Thanks — your message has been sent.");
+      setStatus("ok", "Thanks for getting in touch! I've received your message and I'll be reaching out with a reply soon.");
       form.reset();
       return;
     }
@@ -189,7 +189,7 @@ if (form) {
       const result = await response.json();
 
       if (result.success) {
-        setStatus("ok", "Thanks — your message has been sent. I'll reply to " + form.email.value + ".");
+        setStatus("ok", "Thanks for getting in touch! I've received your message and I'll be reaching out to " + form.email.value + " with a reply soon.");
         form.reset();
       } else {
         throw new Error(result.message || "the service refused the message");
