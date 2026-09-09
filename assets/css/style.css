@@ -34,24 +34,24 @@
     hsla(240, 2%, 11%, 0) 100%
   ), hsl(240, 2%, 13%);
   --bg-gradient-yellow-1: linear-gradient(
-    to bottom right, 
-    hsl(45, 100%, 71%) 0%, 
-    hsla(36, 100%, 69%, 0) 50%
+    to bottom right,
+    hsl(38, 96%, 62%) 0%,
+    hsla(28, 92%, 58%, 0) 50%
   );
   --bg-gradient-yellow-2: linear-gradient(
-    135deg, 
-    hsla(45, 100%, 71%, 0.251) 0%, 
-    hsla(35, 100%, 68%, 0) 59.86%
+    135deg,
+    hsla(38, 96%, 62%, 0.251) 0%,
+    hsla(26, 92%, 56%, 0) 59.86%
   ), hsl(240, 2%, 13%);
   --border-gradient-onyx: linear-gradient(
-    to bottom right, 
-    hsl(0, 0%, 25%) 0%, 
+    to bottom right,
+    hsl(0, 0%, 25%) 0%,
     hsla(0, 0%, 25%, 0) 50%
   );
   --text-gradient-yellow: linear-gradient(
-    to right, 
-    hsl(45, 100%, 72%), 
-    hsl(35, 100%, 68%)
+    to right,
+    hsl(38, 96%, 64%),
+    hsl(26, 92%, 58%)
   );
 
   /* solid */
@@ -63,8 +63,8 @@
   --smoky-black: hsl(0, 0%, 7%);
   --white-1: hsl(0, 0%, 100%);
   --white-2: hsl(0, 0%, 98%);
-  --orange-yellow-crayola: hsl(45, 100%, 72%);
-  --vegas-gold: hsl(45, 54%, 58%);
+  --orange-yellow-crayola: hsl(38, 96%, 62%);
+  --vegas-gold: hsl(36, 58%, 56%);
   --light-gray: hsl(0, 0%, 84%);
   --light-gray-70: hsla(0, 0%, 84%, 0.7);
   --bittersweet-shimmer: hsl(0, 43%, 51%);
@@ -75,6 +75,7 @@
 
   /* font-family */
   --ff-poppins: 'Poppins', sans-serif;
+  --ff-sora: 'Sora', 'Poppins', sans-serif;
 
   /* font-size */
   --fs-1: 24px;
@@ -109,6 +110,43 @@
   --transition-1: 0.25s ease;
   --transition-2: 0.5s ease-in-out;
 
+}
+
+
+/**
+ * LIGHT THEME
+ * Remaps the palette only. Every surface, border and text colour in the
+ * stylesheet already reads from these tokens, so the whole UI follows.
+ */
+
+:root[data-theme="light"] {
+
+  --bg-gradient-onyx: linear-gradient(to bottom right, hsl(0, 0%, 91%) 3%, hsl(0, 0%, 87%) 97%);
+  --bg-gradient-jet: linear-gradient(to bottom right, hsla(0, 0%, 85%, 0.35) 0%, hsla(0, 0%, 90%, 0) 100%), hsl(0, 0%, 100%);
+  --bg-gradient-yellow-1: linear-gradient(to bottom right, hsl(38, 96%, 60%) 0%, hsla(28, 92%, 58%, 0) 50%);
+  --bg-gradient-yellow-2: linear-gradient(135deg, hsla(38, 96%, 60%, 0.3) 0%, hsla(26, 92%, 56%, 0) 59.86%), hsl(0, 0%, 100%);
+  --border-gradient-onyx: linear-gradient(to bottom right, hsl(0, 0%, 82%) 0%, hsla(0, 0%, 82%, 0) 50%);
+
+  --jet: hsl(0, 0%, 87%);
+  --onyx: hsl(0, 0%, 93%);
+  --eerie-black-1: hsl(0, 0%, 100%);
+  --eerie-black-2: hsl(0, 0%, 99%);
+  --smoky-black: hsl(40, 20%, 96%);
+  --white-1: hsl(0, 0%, 14%);
+  --white-2: hsl(0, 0%, 10%);
+  --light-gray: hsl(0, 0%, 32%);
+  --light-gray-70: hsla(0, 0%, 28%, 0.85);
+  --vegas-gold: hsl(34, 62%, 46%);
+
+  --shadow-1: -4px 8px 24px hsla(0, 0%, 0%, 0.08);
+  --shadow-2: 0 16px 30px hsla(0, 0%, 0%, 0.08);
+  --shadow-3: 0 16px 40px hsla(0, 0%, 0%, 0.1);
+  --shadow-4: 0 25px 50px hsla(0, 0%, 0%, 0.08);
+  --shadow-5: 0 24px 80px hsla(0, 0%, 0%, 0.1);
+}
+
+:root[data-theme="light"] .navbar {
+  background: hsla(0, 0%, 100%, 0.8);
 }
 
 
@@ -216,8 +254,31 @@ article.active {
 }
 
 @keyframes fade {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
+  0% { opacity: 0; transform: translateY(14px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* scroll reveal — items start hidden, .in-view is added by the observer */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition-delay: var(--reveal-delay, 0s);
+  will-change: opacity, transform;
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  article.active { animation: none; }
+  .reveal, .reveal.in-view {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 .h2,
@@ -226,6 +287,8 @@ article.active {
 .h5 {
   color: var(--white-2);
   text-transform: capitalize;
+  font-family: var(--ff-sora);
+  letter-spacing: -0.02em;
 }
 
 .h2 { font-size: var(--fs-1); }
@@ -338,9 +401,10 @@ main {
 
 .info-content .name {
   color: var(--white-2);
+  font-family: var(--ff-sora);
   font-size: var(--fs-3);
-  font-weight: var(--fw-500);
-  letter-spacing: -0.25px;
+  font-weight: var(--fw-600);
+  letter-spacing: -0.5px;
   margin-bottom: 10px;
 }
 
@@ -348,10 +412,12 @@ main {
   color: var(--white-1);
   background: var(--onyx);
   font-size: var(--fs-8);
-  font-weight: var(--fw-300);
+  font-weight: var(--fw-400);
+  letter-spacing: 0.04em;
   width: max-content;
-  padding: 3px 12px;
+  padding: 4px 13px;
   border-radius: 8px;
+  border: 1px solid hsla(38, 96%, 62%, 0.22);
 }
 
 .info_more-btn {
@@ -486,6 +552,28 @@ main {
 .navbar-link:focus { color: var(--light-gray-70); }
 
 .navbar-link.active { color: var(--orange-yellow-crayola); }
+
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  color: var(--light-gray);
+  font-size: 18px;
+  border-radius: 50%;
+  transition: color var(--transition-1), background var(--transition-1);
+}
+
+.theme-toggle:hover {
+  color: var(--orange-yellow-crayola);
+  background: var(--jet);
+}
+
+.theme-toggle ion-icon { --ionicon-stroke-width: 40px; }
+
+:root:not([data-theme="light"]) .theme-icon-light { display: none; }
+:root[data-theme="light"] .theme-icon-dark { display: none; }
 
 
 
@@ -758,6 +846,14 @@ main {
 }
 
 .shots-title { color: var(--white-2); }
+
+.shots-count {
+  margin-right: auto;
+  font-size: var(--fs-7);
+  font-variant-numeric: tabular-nums;
+  color: var(--light-gray-70);
+  letter-spacing: 0.02em;
+}
 
 .shots-source {
   display: inline-flex;
@@ -1113,6 +1209,17 @@ main {
   border-radius: 16px;
   overflow: hidden;
   margin-bottom: 15px;
+  background: var(--eerie-black-1);
+}
+
+/* keep the top of tall screenshots (headers, nav) in frame instead of the middle */
+.project-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to top, hsla(0, 0%, 7%, 0.55), transparent 42%);
 }
 
 .project-img::before {
@@ -1157,6 +1264,7 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top center;
   transition: var(--transition-1);
 }
 
@@ -1167,8 +1275,10 @@ main {
 
 .project-title {
   color: var(--white-2);
+  font-family: var(--ff-sora);
   font-size: var(--fs-5);
-  font-weight: var(--fw-400);
+  font-weight: var(--fw-500);
+  letter-spacing: -0.01em;
   text-transform: capitalize;
   line-height: 1.3;
 }
