@@ -7,10 +7,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Khattab Afifi — Meroe Systems</title>
   <meta name="description" content="Meroe Systems is a small software studio building fintech, e-commerce and point-of-sale systems. Founded by Khattab Afifi.">
+  <meta name="theme-color" content="#1e1e20">
+  <link rel="canonical" href="https://kh0tt0b.github.io/portfolio/">
+
+  <!--
+    - social sharing (Open Graph / Twitter)
+  -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Meroe Systems">
+  <meta property="og:title" content="Khattab Afifi — Meroe Systems">
+  <meta property="og:description" content="A small software studio building fintech, e-commerce and point-of-sale systems. Founded by Khattab Afifi, Kigali.">
+  <meta property="og:url" content="https://kh0tt0b.github.io/portfolio/">
+  <meta property="og:image" content="https://kh0tt0b.github.io/portfolio/assets/images/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Khattab Afifi — Meroe Systems">
+  <meta name="twitter:description" content="A small software studio building fintech, e-commerce and point-of-sale systems.">
+  <meta name="twitter:image" content="https://kh0tt0b.github.io/portfolio/assets/images/og-image.png">
 
   <!--
     - favicon
   -->
+  <link rel="icon" href="./assets/images/favicon.svg" type="image/svg+xml">
   <link rel="shortcut icon" href="./assets/images/logo.ico" type="image/x-icon">
 
   <!--
@@ -23,7 +42,22 @@
   -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!--
+    - set the theme before first paint so there is no flash
+  -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        var theme = saved || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (e) {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    })();
+  </script>
 </head>
 
 <body>
@@ -188,6 +222,13 @@
 
                 <li class="navbar-item">
                     <button class="navbar-link" data-nav-link>Contact</button>
+                </li>
+
+                <li class="navbar-item navbar-item-theme">
+                    <button class="theme-toggle" data-theme-toggle type="button" aria-label="Switch colour theme" title="Switch colour theme">
+                        <ion-icon name="moon-outline" class="theme-icon-dark"></ion-icon>
+                        <ion-icon name="sunny-outline" class="theme-icon-light"></ion-icon>
+                    </button>
                 </li>
 
             </ul>
@@ -405,6 +446,8 @@
                         <div class="shots-header">
 
                             <h4 class="h3 shots-title" data-shots-title>Project Screenshots</h4>
+
+                            <span class="shots-count" data-shots-count aria-hidden="true"></span>
 
                             <a href="#" target="_blank" rel="noopener" class="shots-source" data-shots-source>
                                 <ion-icon name="logo-github"></ion-icon>
@@ -796,7 +839,7 @@
                                             <ion-icon name="eye-outline"></ion-icon>
                                         </div>
 
-                                        <img src="./assets/images/screenshots/sijil-mobile-checkout.png" alt="Sijil offline POS checkout" loading="lazy">
+                                        <img src="./assets/images/screenshots/sijil-mobile-products.webp" alt="Sijil — product management screen" loading="lazy">
                                     </figure>
 
                                     <h3 class="project-title">Sijil</h3>
@@ -814,7 +857,7 @@
                                             <ion-icon name="eye-outline"></ion-icon>
                                         </div>
 
-                                        <img src="./assets/images/screenshots/rwanda-id-mobile-scan.png" alt="Rwanda ID Scanner scan screen" loading="lazy">
+                                        <img src="./assets/images/screenshots/rwanda-id-mobile-scan.webp" alt="Rwanda ID Scanner scan screen" loading="lazy">
                                     </figure>
 
                                     <h3 class="project-title">Rwanda ID Scanner</h3>

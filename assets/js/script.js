@@ -16,6 +16,18 @@ sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); }
 
 
 
+// theme toggle — the head script has already set data-theme from storage / OS
+const themeToggle = document.querySelector("[data-theme-toggle]");
+if (themeToggle) {
+  themeToggle.addEventListener("click", function () {
+    const next = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("theme", next); } catch (e) {}
+  });
+}
+
+
+
 // testimonials variables
 const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
 const modalContainer = document.querySelector("[data-modal-container]");
@@ -244,62 +256,62 @@ const GALLERIES = {
     title: "AMISAM — Savings & Microfinance Platform",
     source: "https://github.com/kh0tt0b/amisam",
     shots: [
-      ["amisam-web-dashboard.png", "Web · Admin Dashboard — live KPIs from the running API"],
-      ["amisam-web-members.png", "Web · Member management — KYC status, balances, verification"],
-      ["amisam-web-payments.png", "Web · Payments — MTN MoMo flow with 10% admin fee"],
-      ["amisam-web-disbursements.png", "Web · Disbursements & lottery — winners and claims"],
-      ["amisam-web-reports.png", "Web · Reporting — balance sheet, cycle summary, audit trail"],
-      ["amisam-mobile-login.png", "Mobile · Member sign-in (React Native)"],
-      ["amisam-mobile-home.png", "Mobile · Home dashboard — RWF 185,000 balance, quick actions"],
-      ["amisam-mobile-transactions.png", "Mobile · Transactions — Payment In RWF 50,000 (PAY202608020030)"],
-      ["amisam-mobile-disbursements.png", "Mobile · Disbursements — lottery winnings & goods"],
-      ["amisam-mobile-profile.png", "Mobile · Profile — member #1, KYC verified, ACTIVE"],
+      ["amisam-web-dashboard.webp", "Web · Admin Dashboard — live KPIs from the running API"],
+      ["amisam-web-members.webp", "Web · Member management — KYC status, balances, verification"],
+      ["amisam-web-payments.webp", "Web · Payments — MTN MoMo flow with 10% admin fee"],
+      ["amisam-web-disbursements.webp", "Web · Disbursements & lottery — winners and claims"],
+      ["amisam-web-reports.webp", "Web · Reporting — balance sheet, cycle summary, audit trail"],
+      ["amisam-mobile-login.webp", "Mobile · Member sign-in (React Native)"],
+      ["amisam-mobile-home.webp", "Mobile · Home dashboard — RWF 185,000 balance, quick actions"],
+      ["amisam-mobile-transactions.webp", "Mobile · Transactions — Payment In RWF 50,000 (PAY202608020030)"],
+      ["amisam-mobile-disbursements.webp", "Mobile · Disbursements — lottery winnings & goods"],
+      ["amisam-mobile-profile.webp", "Mobile · Profile — member #1, KYC verified, ACTIVE"],
     ],
   },
   "restaurant-pos": {
     title: "Restaurant POS — Service Geometry",
     source: "https://github.com/kh0tt0b/restaurant-pos",
     shots: [
-      ["pos-floor-plan.png", "Floor plan — four table states at a glance: free, in service, bill asked, running late"],
-      ["pos-order-ticket.png", "Order — menu, live ticket and a kitchen-state chip; every total comes from the server"],
-      ["pos-kitchen-pass.png", "Kitchen pass — pushed over SSE, big type, no prices, and an undo strip for a wrong bump"],
-      ["pos-payment-bills.png", "Payment — open bills coloured by where the food is: blue in the kitchen, yellow up and waiting"],
-      ["pos-dashboard.png", "Reporting — sales by hour, top items, tender split, all from the live database"],
-      ["pos-sign-in.png", "Staff sign-in — pick a name, then a 4-digit PIN; role decides what the till will show"],
+      ["pos-floor-plan.webp", "Floor plan — four table states at a glance: free, in service, bill asked, running late"],
+      ["pos-order-ticket.webp", "Order — menu, live ticket and a kitchen-state chip; every total comes from the server"],
+      ["pos-kitchen-pass.webp", "Kitchen pass — pushed over SSE, big type, no prices, and an undo strip for a wrong bump"],
+      ["pos-payment-bills.webp", "Payment — open bills coloured by where the food is: blue in the kitchen, yellow up and waiting"],
+      ["pos-dashboard.webp", "Reporting — sales by hour, top items, tender split, all from the live database"],
+      ["pos-sign-in.webp", "Staff sign-in — pick a name, then a 4-digit PIN; role decides what the till will show"],
     ],
   },
   soko: {
     title: "SOKO — Multi-Vendor Marketplace",
     source: "https://github.com/kh0tt0b/soko-marketplace-20260707",
     shots: [
-      ["soko-web-marketplace.png", "Web · Storefront — 17 live listings from the catalog API"],
-      ["soko-web-login.png", "Web · Authentication — email + password"],
-      ["soko-web-home.png", "Web · Home (logged in) — session-backed navigation"],
-      ["soko-web-admin.png", "Web · Admin dashboard — 3 users, 17 active listings, 0 pending"],
-      ["soko-web-account.png", "Web · Account — profile data from the API"],
-      ["soko-mobile-marketplace.png", "Mobile · Marketplace (Flutter) — live catalog over LAN"],
-      ["soko-mobile-detail.png", "Mobile · Listing detail — Trek Domane SL 5, $2,800, Cairo"],
-      ["soko-mobile-login.png", "Mobile · Sign-in screen"],
+      ["soko-web-marketplace.webp", "Web · Storefront — 17 live listings from the catalog API"],
+      ["soko-web-login.webp", "Web · Authentication — email + password"],
+      ["soko-web-home.webp", "Web · Home (logged in) — session-backed navigation"],
+      ["soko-web-admin.webp", "Web · Admin dashboard — 3 users, 17 active listings, 0 pending"],
+      ["soko-web-account.webp", "Web · Account — profile data from the API"],
+      ["soko-mobile-marketplace.webp", "Mobile · Marketplace (Flutter) — live catalog over LAN"],
+      ["soko-mobile-detail.webp", "Mobile · Listing detail — Trek Domane SL 5, $2,800, Cairo"],
+      ["soko-mobile-login.webp", "Mobile · Sign-in screen"],
     ],
   },
   sijil: {
     title: "Sijil — Offline POS & Billing",
     source: "https://github.com/kh0tt0b/sijil",
     shots: [
-      ["sijil-mobile-checkout.png", "Checkout — camera barcode scan with live cart panel, real shop data"],
-      ["sijil-mobile-products.png", "Product Management — stock, prices and units, scan-to-find by barcode"],
-      ["sijil-mobile-sales-history.png", "Sales History — daily takings by payment method, per-receipt breakdown"],
-      ["sijil-mobile-settings.png", "Settings — products, shop details, sales history and scan behaviour"],
+      ["sijil-mobile-checkout.webp", "Checkout — camera barcode scan with live cart panel, real shop data"],
+      ["sijil-mobile-products.webp", "Product Management — stock, prices and units, scan-to-find by barcode"],
+      ["sijil-mobile-sales-history.webp", "Sales History — daily takings by payment method, per-receipt breakdown"],
+      ["sijil-mobile-settings.webp", "Settings — products, shop details, sales history and scan behaviour"],
     ],
   },
   "rwanda-id-scanner": {
     title: "Rwanda ID Scanner",
     source: "https://github.com/kh0tt0b/rwanda-id-scanner",
     shots: [
-      ["rwanda-id-mobile-scan.png", "Scan tab — camera aimed at the card's barcode, live viewfinder"],
-      ["rwanda-id-mobile-mrz.png", "MRZ tab — on-device OCR fallback for cards with no barcode"],
-      ["rwanda-id-mobile-raw.png", "Raw dump — every payload byte verbatim, for writing new parsers"],
-      ["rwanda-id-mobile-settings.png", "Settings — clipboard auto-copy templates for the registration system"],
+      ["rwanda-id-mobile-scan.webp", "Scan tab — camera aimed at the card's barcode, live viewfinder"],
+      ["rwanda-id-mobile-mrz.webp", "MRZ tab — on-device OCR fallback for cards with no barcode"],
+      ["rwanda-id-mobile-raw.webp", "Raw dump — every payload byte verbatim, for writing new parsers"],
+      ["rwanda-id-mobile-settings.webp", "Settings — clipboard auto-copy templates for the registration system"],
     ],
   },
 };
@@ -314,6 +326,7 @@ const shotsCaption = document.querySelector("[data-shots-caption]");
 const shotsThumbs = document.querySelector("[data-shots-thumbs]");
 const shotsPrev = document.querySelector("[data-shots-prev]");
 const shotsNext = document.querySelector("[data-shots-next]");
+const shotsCount = document.querySelector("[data-shots-count]");
 
 let currentShots = [];
 let currentIndex = 0;
@@ -345,17 +358,26 @@ function shotsClose() {
   document.body.style.overflow = "";
 }
 
+const shotsPath = "./assets/images/screenshots/";
+
 function shotsShow(index) {
   currentIndex = (index + currentShots.length) % currentShots.length;
   const shot = currentShots[currentIndex];
-  shotsImg.src = "./assets/images/screenshots/" + shot[0];
+  shotsImg.src = shotsPath + shot[0];
   shotsImg.alt = shot[1];
   shotsCaption.textContent = shot[1];
+  if (shotsCount) shotsCount.textContent = (currentIndex + 1) + " / " + currentShots.length;
   Array.from(shotsThumbs.children).forEach((el, i) => {
     el.classList.toggle("active", i === currentIndex);
   });
   const activeThumb = shotsThumbs.children[currentIndex];
   if (activeThumb) activeThumb.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+
+  // preload the neighbours so left/right arrows feel instant
+  [1, -1].forEach((step) => {
+    const next = currentShots[(currentIndex + step + currentShots.length) % currentShots.length];
+    if (next) { const im = new Image(); im.src = shotsPath + next[0]; }
+  });
 }
 
 // open from project cards
@@ -391,3 +413,68 @@ shotsModalContainer.addEventListener("touchend", function (e) {
   if (Math.abs(dx) > 50) shotsShow(currentIndex + (dx < 0 ? 1 : -1));
   swipeStartX = null;
 }, { passive: true });
+
+
+
+// ------------------------------------------------------------------
+// scroll reveal
+// ------------------------------------------------------------------
+
+(function () {
+  const groups = [
+    ".service-item",
+    ".timeline-item",
+    ".skills-item",
+    ".project-item",
+  ];
+
+  const targets = [];
+  groups.forEach((sel) => {
+    document.querySelectorAll(sel).forEach((el, i) => {
+      el.classList.add("reveal");
+      // stagger items within a group, capped so nothing waits too long
+      el.style.setProperty("--reveal-delay", Math.min(i, 6) * 0.06 + "s");
+      targets.push(el);
+    });
+  });
+
+  const revealAll = (root) =>
+    (root || document).querySelectorAll(".reveal:not(.in-view)").forEach((el) => {
+      el.style.setProperty("--reveal-delay", "0s");
+      el.classList.add("in-view");
+    });
+
+  if (!("IntersectionObserver" in window)) {
+    revealAll();
+    return;
+  }
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+          io.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+  );
+
+  targets.forEach((el) => io.observe(el));
+
+  // Switching to another page shows a fresh article the observer never saw
+  // scroll for — just reveal that whole page so nothing is ever left invisible.
+  document.querySelectorAll("[data-nav-link]").forEach((link) => {
+    link.addEventListener("click", function () {
+      const page = this.textContent.trim().toLowerCase();
+      setTimeout(() => {
+        const article = document.querySelector('[data-page="' + page + '"]');
+        if (article) revealAll(article);
+      }, 60);
+    });
+  });
+
+  // Safety net: never leave content on the visible page hidden.
+  setTimeout(() => revealAll(document.querySelector("article.active")), 1600);
+})();
