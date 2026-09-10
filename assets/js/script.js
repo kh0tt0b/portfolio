@@ -235,10 +235,12 @@ for (let i = 0; i < navigationLinks.length; i++) {
       if (this.innerHTML.toLowerCase() === pages[i].dataset.page) {
         pages[i].classList.add("active");
         navigationLinks[i].classList.add("active");
+        navigationLinks[i].setAttribute("aria-current", "page");
         window.scrollTo(0, 0);
       } else {
         pages[i].classList.remove("active");
         navigationLinks[i].classList.remove("active");
+        navigationLinks[i].removeAttribute("aria-current");
       }
     }
 
@@ -255,6 +257,9 @@ const GALLERIES = {
   amisam: {
     title: "AMISAM — Savings & Microfinance Platform",
     source: "https://github.com/kh0tt0b/amisam",
+    blurb:
+      "A savings-group platform for a Rwandan cooperative: members pay in, the group lends and runs a monthly lottery, and every franc is accounted for. A web console for the administrators and a React Native app for members, both talking to one REST API. Money in and out goes through MTN Mobile Money with the group's admin fee taken automatically; KYC, disbursements, claims and a full audit trail are built in.",
+    stack: ["Laravel", "REST API", "React Native", "MySQL", "MTN MoMo", "KYC"],
     shots: [
       ["amisam-web-dashboard.webp", "Web · Admin Dashboard — live KPIs from the running API"],
       ["amisam-web-members.webp", "Web · Member management — KYC status, balances, verification"],
@@ -271,6 +276,9 @@ const GALLERIES = {
   "restaurant-pos": {
     title: "Restaurant POS — Service Geometry",
     source: "https://github.com/kh0tt0b/restaurant-pos",
+    blurb:
+      "A tablet-first point of sale for a full-service restaurant — dine-in, takeaway and delivery — that keeps working with the wi-fi off and syncs when it returns. Orders sent to the kitchen appear there live over SSE; every total is calculated on the server, never the client; staff sign in with a name and a 4-digit PIN and see only what their role allows. One codebase ships as a web app and as an offline desktop build.",
+    stack: ["Node 24", "TypeScript", "node:sqlite", "React", "Vite", "SSE", "Offline-first"],
     shots: [
       ["pos-floor-plan.webp", "Floor plan — four table states at a glance: free, in service, bill asked, running late"],
       ["pos-order-ticket.webp", "Order — menu, live ticket and a kitchen-state chip; every total comes from the server"],
@@ -283,6 +291,9 @@ const GALLERIES = {
   soko: {
     title: "SOKO — Multi-Vendor Marketplace",
     source: "https://github.com/kh0tt0b/soko-marketplace-20260707",
+    blurb:
+      "A multi-vendor marketplace as a monorepo: a NestJS API, a React storefront and a Flutter app that all share one set of Zod contracts, so the same validation runs on the server, the web and the phone. Auth, a vendor catalogue, an admin review queue and real-time updates over WebSockets, all wired together with Docker Compose behind an Nginx proxy.",
+    stack: ["NestJS", "Prisma", "PostgreSQL", "Redis", "React 19", "Flutter", "WebSockets", "Docker"],
     shots: [
       ["soko-web-marketplace.webp", "Web · Storefront — 17 live listings from the catalog API"],
       ["soko-web-login.webp", "Web · Authentication — email + password"],
@@ -297,6 +308,9 @@ const GALLERIES = {
   sijil: {
     title: "Sijil — Offline POS & Billing",
     source: "https://github.com/kh0tt0b/sijil",
+    blurb:
+      "An offline-first POS and billing app for a small retail shop — barcode scanning, Bluetooth thermal receipts, and a stock ledger that can explain every count because totals are rebuilt from dated movements rather than stored. Money is integer maths at three decimal places, never floating point. Ships as two editions from one codebase: a single-till build with no network permission at all, and a multi-till build that syncs through a small Node server on the shop's own laptop. English and Arabic, right-to-left.",
+    stack: ["Flutter", "Dart", "flutter_bloc", "Hive", "go_router", "mobile_scanner", "ESC/POS", "Node"],
     shots: [
       ["sijil-mobile-checkout.webp", "Checkout — camera barcode scan with live cart panel, real shop data"],
       ["sijil-mobile-products.webp", "Product Management — stock, prices and units, scan-to-find by barcode"],
@@ -307,6 +321,9 @@ const GALLERIES = {
   "rwanda-id-scanner": {
     title: "Rwanda ID Scanner",
     source: "https://github.com/kh0tt0b/rwanda-id-scanner",
+    blurb:
+      "Reads the Rwandan national ID with a phone camera and pushes the fields into whatever system is registering people. There is no public spec for the card, so the app was built around discovery: a raw-dump view that shows any barcode's bytes verbatim, a decoder for the PDF417 that a real card turned out to carry, an on-device OCR path for the machine-readable zone, and a plug-in slot for new formats. Nothing is uploaded — OCR runs on the device, in line with Rwanda's data-protection law.",
+    stack: ["Flutter", "mobile_scanner", "ML Kit OCR", "PDF417", "ICAO MRZ", "On-device"],
     shots: [
       ["rwanda-id-mobile-scan.webp", "Scan tab — camera aimed at the card's barcode, live viewfinder"],
       ["rwanda-id-mobile-mrz.webp", "MRZ tab — on-device OCR fallback for cards with no barcode"],
@@ -327,6 +344,9 @@ const shotsThumbs = document.querySelector("[data-shots-thumbs]");
 const shotsPrev = document.querySelector("[data-shots-prev]");
 const shotsNext = document.querySelector("[data-shots-next]");
 const shotsCount = document.querySelector("[data-shots-count]");
+const shotsAbout = document.querySelector("[data-shots-about]");
+const shotsBlurb = document.querySelector("[data-shots-blurb]");
+const shotsStack = document.querySelector("[data-shots-stack]");
 
 let currentShots = [];
 let currentIndex = 0;
@@ -346,6 +366,25 @@ function shotsOpen(galleryKey) {
     btn.addEventListener("click", function () { shotsShow(i); });
     shotsThumbs.appendChild(btn);
   });
+
+  if (shotsAbout) {
+    if (gallery.blurb) {
+      shotsBlurb.textContent = gallery.blurb;
+      shotsStack.innerHTML = "";
+      (gallery.stack || []).forEach((tech) => {
+        const li = document.createElement("li");
+        li.textContent = tech;
+        shotsStack.appendChild(li);
+      });
+      shotsAbout.hidden = false;
+    } else {
+      shotsAbout.hidden = true;
+    }
+  }
+
+  shotsModalContainer.scrollTop = 0;
+  const modalBody = shotsModalContainer.querySelector(".shots-modal");
+  if (modalBody) modalBody.scrollTop = 0;
   shotsShow(0);
   shotsModalContainer.classList.add("active");
   shotsOverlay.classList.add("active");

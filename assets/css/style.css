@@ -191,6 +191,32 @@ input, textarea {
 
 :focus { outline-color: var(--orange-yellow-crayola); }
 
+/* only draw a ring for keyboard users, and make it clearly visible */
+:focus-visible {
+  outline: 2px solid var(--orange-yellow-crayola);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+:focus:not(:focus-visible) { outline: none; }
+
+.skip-link {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  padding: 10px 16px;
+  background: var(--orange-yellow-crayola);
+  color: var(--smoky-black);
+  font-size: var(--fs-7);
+  font-weight: var(--fw-500);
+  border-radius: 8px;
+  transform: translateY(-160%);
+  transition: transform var(--transition-1);
+}
+
+.skip-link:focus { transform: translateY(0); }
+
 html { font-family: var(--ff-poppins); }
 
 body { background: var(--smoky-black); }
@@ -827,7 +853,36 @@ main {
   opacity: 0;
   transition: var(--transition-1);
   z-index: 2;
-  overflow: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.shots-about {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--jet);
+}
+
+.shots-blurb {
+  color: var(--light-gray);
+  font-size: var(--fs-6);
+  line-height: 1.7;
+}
+
+.shots-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.shots-stack li {
+  font-size: var(--fs-8);
+  letter-spacing: 0.02em;
+  color: var(--light-gray-70);
+  background: var(--jet);
+  padding: 4px 10px;
+  border-radius: 6px;
 }
 
 .modal-container.active .shots-modal {
@@ -1017,8 +1072,30 @@ main {
 
 
 /**
- * education and experience 
+ * education and experience
  */
+
+.cv-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 26px;
+  padding: 10px 18px;
+  font-size: var(--fs-6);
+  color: var(--orange-yellow-crayola);
+  background: var(--border-gradient-onyx);
+  border: 1px solid var(--jet);
+  border-radius: 10px;
+  transition: var(--transition-1);
+}
+
+.cv-download:hover {
+  background: var(--bg-gradient-yellow-1);
+  color: var(--smoky-black);
+  border-color: transparent;
+}
+
+.cv-download ion-icon { font-size: 17px; }
 
 .timeline { margin-bottom: 30px; }
 
