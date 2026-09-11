@@ -890,6 +890,163 @@ main {
   opacity: 1;
 }
 
+
+
+/*-----------------------------------*\
+  #TERMINAL
+\*-----------------------------------*/
+
+.terminal-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  color: var(--light-gray);
+  font-size: 18px;
+  border-radius: 50%;
+  transition: color var(--transition-1), background var(--transition-1), transform var(--transition-1);
+}
+
+.terminal-toggle:hover {
+  color: var(--orange-yellow-crayola);
+  background: var(--jet);
+  transform: translateY(-1px);
+}
+
+.terminal-toggle ion-icon { --ionicon-stroke-width: 40px; }
+
+.terminal-toggle-dot {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: hsl(140, 70%, 55%);
+  box-shadow: 0 0 0 0 hsla(140, 70%, 55%, 0.6);
+  animation: terminal-pulse 2.2s ease-out infinite;
+}
+
+@keyframes terminal-pulse {
+  0% { box-shadow: 0 0 0 0 hsla(140, 70%, 55%, 0.55); }
+  70% { box-shadow: 0 0 0 6px hsla(140, 70%, 55%, 0); }
+  100% { box-shadow: 0 0 0 0 hsla(140, 70%, 55%, 0); }
+}
+
+.terminal-window {
+  --term-green: hsl(140, 70%, 60%);
+  position: relative;
+  width: min(680px, 100%);
+  max-height: 88vh;
+  margin: 15px 12px;
+  background: hsl(220, 20%, 7%);
+  border: 1px solid hsl(220, 14%, 18%);
+  border-radius: 12px;
+  box-shadow: var(--shadow-5), 0 0 60px hsla(38, 96%, 62%, 0.06);
+  transform: scale(1.08);
+  opacity: 0;
+  transition: var(--transition-1);
+  z-index: 2;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-container.active .terminal-window {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.terminal-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 12px;
+  background: hsl(220, 16%, 11%);
+  border-bottom: 1px solid hsl(220, 14%, 18%);
+  flex-shrink: 0;
+}
+
+.terminal-dot { width: 11px; height: 11px; border-radius: 50%; }
+.terminal-dot-red { background: hsl(6, 78%, 58%); }
+.terminal-dot-yellow { background: hsl(42, 90%, 58%); }
+.terminal-dot-green { background: hsl(140, 55%, 50%); }
+
+.terminal-titlebar-label {
+  margin-left: 6px;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--fs-8);
+  color: hsla(0, 0%, 100%, 0.45);
+}
+
+.terminal-close {
+  margin-left: auto;
+  display: flex;
+  color: hsla(0, 0%, 100%, 0.45);
+  transition: color var(--transition-1);
+}
+
+.terminal-close:hover { color: hsl(6, 78%, 62%); }
+
+.terminal-body {
+  padding: 16px 16px 6px;
+  height: min(46vh, 380px);
+  overflow-y: auto;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.7;
+  color: hsla(0, 0%, 100%, 0.85);
+}
+
+.term-line {
+  white-space: pre-wrap;
+  word-break: break-word;
+  opacity: 0;
+  animation: term-line-in 0.25s ease forwards;
+}
+
+@keyframes term-line-in {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.term-line-cmd { color: hsl(0, 0%, 100%); }
+.term-line-cmd::before { content: "khattab@meroe:~$ "; color: var(--term-green); }
+.term-line-out { color: hsla(0, 0%, 100%, 0.72); }
+.term-line-accent { color: hsl(38, 96%, 66%); }
+.term-line-err { color: hsl(6, 78%, 66%); }
+.term-line-dim { color: hsla(0, 0%, 100%, 0.4); }
+
+.terminal-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px 14px;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.terminal-prompt { color: var(--term-green); white-space: nowrap; }
+
+.terminal-input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: hsl(0, 0%, 100%);
+  caret-color: hsl(38, 96%, 62%);
+  font: inherit;
+}
+
+.terminal-input:focus { outline: none; }
+
+@media (max-width: 500px) {
+  .terminal-body { height: min(50vh, 320px); font-size: 12.5px; }
+  .terminal-titlebar-label { display: none; }
+}
+
 .shots-header {
   display: flex;
   justify-content: space-between;

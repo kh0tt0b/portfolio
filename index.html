@@ -266,6 +266,13 @@
                     </button>
                 </li>
 
+                <li class="navbar-item navbar-item-terminal">
+                    <button class="terminal-toggle" data-terminal-toggle type="button" aria-label="Open interactive terminal" title="Open terminal">
+                        <ion-icon name="terminal-outline"></ion-icon>
+                        <span class="terminal-toggle-dot" aria-hidden="true"></span>
+                    </button>
+                </li>
+
             </ul>
 
         </nav>
@@ -513,6 +520,39 @@
                         <div class="shots-about" data-shots-about hidden>
                             <p class="shots-blurb" data-shots-blurb></p>
                             <ul class="shots-stack" data-shots-stack></ul>
+                        </div>
+
+                    </section>
+
+                </div>
+
+
+
+                <!--
+      - #TERMINAL
+    -->
+
+                <div class="modal-container" data-terminal-modal>
+
+                    <div class="overlay" data-terminal-overlay></div>
+
+                    <section class="terminal-window" role="dialog" aria-label="Interactive terminal" aria-modal="true">
+
+                        <div class="terminal-titlebar">
+                            <span class="terminal-dot terminal-dot-red"></span>
+                            <span class="terminal-dot terminal-dot-yellow"></span>
+                            <span class="terminal-dot terminal-dot-green"></span>
+                            <span class="terminal-titlebar-label">khattab@meroe:~</span>
+                            <button class="terminal-close" data-terminal-close aria-label="Close terminal">
+                                <ion-icon name="close-outline"></ion-icon>
+                            </button>
+                        </div>
+
+                        <div class="terminal-body" data-terminal-body tabindex="-1"></div>
+
+                        <div class="terminal-input-row">
+                            <span class="terminal-prompt">khattab@meroe:~$</span>
+                            <input class="terminal-input" data-terminal-input type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Terminal command input">
                         </div>
 
                     </section>
