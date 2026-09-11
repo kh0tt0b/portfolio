@@ -517,3 +517,258 @@ shotsModalContainer.addEventListener("touchend", function (e) {
   // Safety net: never leave content on the visible page hidden.
   setTimeout(() => revealAll(document.querySelector("article.active")), 1600);
 })();
+
+
+// ------------------------------------------------------------------
+// interactive terminal — a little coding-themed Easter egg for the navbar
+// ------------------------------------------------------------------
+
+(function () {
+  const toggleBtn = document.querySelector("[data-terminal-toggle]");
+  const modal = document.querySelector("[data-terminal-modal]");
+  if (!toggleBtn || !modal) return;
+
+  const overlay = document.querySelector("[data-terminal-overlay]");
+  const closeBtn = document.querySelector("[data-terminal-close]");
+  const body = document.querySelector("[data-terminal-body]");
+  const input = document.querySelector("[data-terminal-input]");
+
+  const history = [];
+  let historyIndex = -1;
+  let booted = false;
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
+
+  function print(text, cls, delay) {
+    const line = document.createElement("div");
+    line.className = "term-line " + (cls || "term-line-out");
+    line.innerHTML = escapeHtml(text);
+    line.style.animationDelay = (delay || 0) + "ms";
+    body.appendChild(line);
+    body.scrollTop = body.scrollHeight;
+    return line;
+  }
+
+  function printEcho(cmd) {
+    print(cmd, "term-line-cmd");
+  }
+
+  function printLines(lines, cls, stagger) {
+    lines.forEach((l, i) => print(l, cls, stagger ? i * 60 : 0));
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function goToPage(pageName) {
+    const link = [...document.querySelectorAll("[data-nav-link]")].find(
+      (b) => b.textContent.trim().toLowerCase() === pageName
+    );
+    if (link) link.click();
+    return !!link;
+  }
+
+  function collectSkills() {
+    return [...document.querySelectorAll(".skills-item h5")].map((el) => el.textContent.trim());
+  }
+
+  function collectProjects() {
+    return Object.keys(GALLERIES || {}).map((key) => ({
+      key,
+      title: (GALLERIES[key] && GALLERIES[key].title) || key,
+    }));
+  }
+
+  const HELP = [
+    "Available commands:",
+    "  about              short bio",
+    "  skills             what I actually work with",
+    "  projects           list of things I've shipped",
+    "  open <page>        about | resume | portfolio | contact",
+    "  contact            how to reach me",
+    "  whoami             guess",
+    "  theme <dark|light> switch the site theme",
+    "  date               current date and time",
+    "  echo <text>        repeats text back",
+    "  clear              clear the screen",
+    "  exit               close this terminal",
+  ];
+
+  function runCommand(raw) {
+    const trimmed = raw.trim();
+    if (!trimmed) return;
+    printEcho(trimmed);
+    history.push(trimmed);
+    historyIndex = history.length;
+
+    const [cmd, ...rest] = trimmed.split(/\s+/);
+    const arg = rest.join(" ");
+    const lc = cmd.toLowerCase();
+
+    switch (lc) {
+      case "help":
+        printLines(HELP, "term-line-out");
+        break;
+
+      case "about":
+        printLines(
+          [
+            "Khattab Afifi — founder of Meroe Systems, a small software studio in Kigali, Rwanda.",
+            "Full-stack: fintech, e-commerce and point-of-sale systems, web and mobile.",
+            "Type 'open about' to read the full page.",
+          ],
+          "term-line-out"
+        );
+        break;
+
+      case "skills": {
+        const skills = collectSkills();
+        printLines(skills.length ? skills.map((s) => "  * " + s) : ["No skills listed yet."], "term-line-out");
+        break;
+      }
+
+      case "projects":
+      case "ls":
+        collectProjects().forEach((p) =>
+          print("  " + p.key.padEnd(20, " ") + p.title, "term-line-accent")
+        );
+        print("Type 'open portfolio' to see them with screenshots.", "term-line-dim");
+        break;
+
+      case "open": {
+        const target = (arg || "").toLowerCase();
+        const pages = ["about", "resume", "portfolio", "contact"];
+        if (pages.includes(target)) {
+          print("Opening " + target + "…", "term-line-out");
+          setTimeout(() => {
+            goToPage(target);
+            closeTerminal();
+          }, 350);
+        } else {
+          print("Usage: open <about|resume|portfolio|contact>", "term-line-err");
+        }
+        break;
+      }
+
+      case "contact":
+        printLines(
+          [
+            "Email:    khattabafas@gmail.com",
+            "Phone:    +250 795-461-456",
+            "GitHub:   github.com/kh0tt0b",
+            "LinkedIn: linkedin.com/in/khattab-mohamed-8b2550388",
+            "Type 'open contact' to use the contact form.",
+          ],
+          "term-line-out"
+        );
+        break;
+
+      case "whoami":
+        print("A visitor with good taste, checking a founder's terminal for fun. Respect.", "term-line-accent");
+        break;
+
+      case "sudo":
+        print("Permission denied: you are not root here.", "term-line-err");
+        print("But I'll happily grant you my email instead: khattabafas@gmail.com", "term-line-out");
+        break;
+
+      case "theme": {
+        const t = (arg || "").toLowerCase();
+        if (t === "dark" || t === "light") {
+          document.documentElement.setAttribute("data-theme", t);
+          try { localStorage.setItem("theme", t); } catch (e) {}
+          print("Theme set to " + t + ".", "term-line-out");
+        } else {
+          print("Usage: theme <dark|light>", "term-line-err");
+        }
+        break;
+      }
+
+      case "date":
+        print(new Date().toString(), "term-line-out");
+        break;
+
+      case "echo":
+        print(arg, "term-line-out");
+        break;
+
+      case "hire":
+        print("Let's talk. Type 'open contact' or email khattabafas@gmail.com directly.", "term-line-accent");
+        break;
+
+      case "clear":
+      case "cls":
+        body.innerHTML = "";
+        break;
+
+      case "exit":
+        closeTerminal();
+        break;
+
+      default:
+        print("command not found: " + cmd + " — type 'help'", "term-line-err");
+    }
+  }
+
+  function bootSequence() {
+    body.innerHTML = "";
+    printLines(
+      [
+        "Meroe Systems terminal v1.0",
+        "Type 'help' to see what this does.",
+        "",
+      ],
+      "term-line-dim",
+      true
+    );
+    booted = true;
+  }
+
+  function openTerminal() {
+    modal.classList.add("active");
+    overlay.classList.add("active");
+    document.body.style.overflow = "hidden";
+    if (!booted) bootSequence();
+    setTimeout(() => input.focus(), 150);
+  }
+
+  function closeTerminal() {
+    modal.classList.remove("active");
+    overlay.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+
+  toggleBtn.addEventListener("click", openTerminal);
+  closeBtn.addEventListener("click", closeTerminal);
+  overlay.addEventListener("click", closeTerminal);
+
+  document.addEventListener("keydown", function (e) {
+    if (!modal.classList.contains("active")) return;
+    if (e.key === "Escape") closeTerminal();
+  });
+
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+      runCommand(input.value);
+      input.value = "";
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (history.length) {
+        historyIndex = Math.max(0, historyIndex - 1);
+        input.value = history[historyIndex] || "";
+      }
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (history.length) {
+        historyIndex = Math.min(history.length, historyIndex + 1);
+        input.value = history[historyIndex] || "";
+      }
+    }
+  });
+
+  // clicking anywhere in the body focuses the input, like a real terminal
+  body.addEventListener("click", () => input.focus());
+})();
